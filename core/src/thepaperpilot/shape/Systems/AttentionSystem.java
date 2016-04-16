@@ -24,7 +24,7 @@ public class AttentionSystem extends EntitySystem {
         if (Player.selected == null) return;
         for (Shape shape : Shape.values()) {
             if (Player.selected == shape) shape.attention -= deltaTime;
-            else shape.attention += deltaTime * Constants.UNBORE_MOD;
+            else shape.attention += deltaTime * shape.unbore;
             if (shape.attention < 0) shape.attention = 0;
             if (shape.attention > shape.maxAttention) shape.attention = shape.maxAttention;
         }
