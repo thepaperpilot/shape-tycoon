@@ -54,6 +54,7 @@ public class AudienceSystem extends EntitySystem {
             ac.actor.setSize(64, 64);
             ac.actor.addAction(Actions.moveBy(MathUtils.random(100, Constants.WORLD_WIDTH - 200), 0, 1, Interpolation.pow2));
             ic.file = "line";
+            ic.chance = 1;
             entity.add(ac);
             entity.add(ic);
             entity.add(auc);

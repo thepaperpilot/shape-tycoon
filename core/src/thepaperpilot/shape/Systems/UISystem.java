@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import thepaperpilot.shape.Components.ActorComponent;
@@ -32,6 +33,8 @@ public class UISystem extends EntitySystem {
     private Label rank;
     private Container rankContainer;
     private Label audience;
+
+    private Table upgradeTable;
 
     public void addedToEngine (Engine engine) {
         Player.reset();
@@ -65,6 +68,8 @@ public class UISystem extends EntitySystem {
                     }
                     shape.label.setColor(Color.ORANGE);
                     Player.selected = shape;
+                    upgradeTable.clearChildren();
+                    upgradeTable.add(Player.selected.upgradeTable).expand().fill();
 
                     AudienceSystem as = getEngine().getSystem(AudienceSystem.class);
                     if (as != null && as.player != null && Mappers.idleAnimation.has(as.player)) {
@@ -83,7 +88,10 @@ public class UISystem extends EntitySystem {
             });
             if (Player.selected == shape) Player.selected.label.setColor(Color.ORANGE);
         }
-        bottom.add(shapes).expandY().fill().expandX().pad(Constants.PADDING);
+        bottom.add(shapes).expandY().fill().pad(Constants.PADDING);
+        upgradeTable = new Table(Main.skin);
+        upgradeTable.add(Player.selected.upgradeTable).expand().fill();
+        bottom.add(upgradeTable).expand().fill();
         ui.add(bottom).expandX().height(Constants.UI_HEIGHT).fill().pad(Constants.PADDING);
 
         Entity entity = new Entity();
