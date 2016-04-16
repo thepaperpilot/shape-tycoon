@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -22,7 +23,8 @@ import java.text.DecimalFormat;
 
 public enum Shape {
     SQUARE("square", "square", 1.2f),
-    CIRCLE("circle", "circle", 1.4f);
+    CIRCLE("circle", "circle", 1.4f),
+    TRIANGLE("triangle", "triangle", 1.6f);
 
     public Engine engine;
 
@@ -74,12 +76,13 @@ public enum Shape {
 
         selectTable = new Table(Main.skin);
         selectTable.setTouchable(Touchable.enabled);
-        Image image = new Image(Main.getTexture(imageString));
-        selectTable.add(image).size(32).spaceRight(4);
+        selectTable.setBackground(Main.skin.getDrawable("default-round"));
+        Image image = new Image(new TextureRegion(Main.getTexture(imageString), 640, 640));
+        selectTable.add(image).size(32).spaceRight(4).pad(4);
         label = new Label(name, Main.skin);
         selectTable.add(label).width(100);
         attentionBar = new ProgressBar(0, maxAttention, 1, false, Main.skin);
-        selectTable.add(attentionBar).width(80);
+        selectTable.add(attentionBar).width(80).pad(4);
 
         upgradeTable = new Table(Main.skin);
 
@@ -108,7 +111,7 @@ public enum Shape {
             }
         });
         attUpgrade.add(attButton).expandX().fill().expandY().pad(4).colspan(2);
-        upgradeTable.add(attUpgrade).expandY().fill().pad(4).expandX();
+        upgradeTable.add(attUpgrade).expandY().fill().pad(4).expandX().uniform();
 
         Table maxAttUpgrade = new Table(Main.skin);
         maxAttUpgrade.setBackground(Main.skin.getDrawable("default-round"));
@@ -132,7 +135,7 @@ public enum Shape {
             }
         });
         maxAttUpgrade.add(maxAttButton).expandX().fill().expandY().pad(4).colspan(2);
-        upgradeTable.add(maxAttUpgrade).expandY().fill().pad(4).expandX();
+        upgradeTable.add(maxAttUpgrade).expandY().fill().pad(4).expandX().uniform();
 
         Table efficiencyUpgrade = new Table(Main.skin);
         efficiencyUpgrade.setBackground(Main.skin.getDrawable("default-round"));
@@ -155,7 +158,7 @@ public enum Shape {
             }
         });
         efficiencyUpgrade.add(effButton).expandX().fill().expandY().pad(4).colspan(2);
-        upgradeTable.add(efficiencyUpgrade).expandY().fill().pad(4).expandX();
+        upgradeTable.add(efficiencyUpgrade).expandY().fill().pad(4).expandX().uniform();
 
         Table entertainmentUpgrade = new Table(Main.skin);
         entertainmentUpgrade.setBackground(Main.skin.getDrawable("default-round"));
@@ -178,7 +181,7 @@ public enum Shape {
             }
         });
         entertainmentUpgrade.add(entButton).expandX().fill().expandY().pad(4).colspan(2);
-        upgradeTable.add(entertainmentUpgrade).expandY().fill().pad(4).expandX();
+        upgradeTable.add(entertainmentUpgrade).expandY().fill().pad(4).expandX().uniform();
 
         Table boreUpgrade = new Table(Main.skin);
         boreUpgrade.setBackground(Main.skin.getDrawable("default-round"));
@@ -201,7 +204,7 @@ public enum Shape {
             }
         });
         boreUpgrade.add(boreButton).expandX().fill().expandY().pad(4).colspan(2);
-        upgradeTable.add(boreUpgrade).expandY().fill().pad(4).expandX();
+        upgradeTable.add(boreUpgrade).expandY().fill().pad(4).expandX().uniform();
     }
 
     public void upgradeEffect(Engine engine) {

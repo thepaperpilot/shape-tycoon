@@ -3,7 +3,7 @@ package thepaperpilot.shape.Util;
 public class Constants {
     /* Balancing */
     public static final float BASE_ATTENTION = 40;
-    public static final float BASE_UNBORE = 1.1f;
+    public static final float BASE_UNBORE = .8f;
     public static final float BASE_ENTERTAINMENT = .05f;
     public static final float BASE_ATT_COST = 7;
     public static final float BASE_MAX_ATT_COST = 13;

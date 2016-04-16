@@ -65,14 +65,14 @@ public class UISystem extends EntitySystem {
         shapes.left().top();
         for (final Shape shape : Shape.values()) {
             shape.engine = engine;
-            shapes.add(shape.selectTable).left().spaceBottom(4).row();
+            shapes.add(shape.selectTable).left().spaceBottom(4).expandY().row();
             shape.selectTable.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (Player.selected != null) {
-                        Player.selected.label.setColor(Color.WHITE);
+                        Player.selected.selectTable.setBackground(Main.skin.getDrawable("default-round"));
                     }
-                    shape.label.setColor(Color.ORANGE);
+                    shape.selectTable.setBackground(Main.skin.getDrawable("default-round-down"));
                     Player.selected = shape;
                     upgradeTable.clearChildren();
                     upgradeTable.add(Player.selected.upgradeTable).expand().fill();
@@ -92,7 +92,9 @@ public class UISystem extends EntitySystem {
                     }
                 }
             });
-            if (Player.selected == shape) Player.selected.label.setColor(Color.ORANGE);
+            if (Player.selected == shape) {
+                shape.selectTable.setBackground(Main.skin.getDrawable("default-round-down"));
+            }
         }
         bottom.add(shapes).expandY().fill().pad(Constants.PADDING);
         upgradeTable = new Table(Main.skin);
