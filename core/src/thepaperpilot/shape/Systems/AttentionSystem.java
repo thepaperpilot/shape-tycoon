@@ -15,12 +15,12 @@ public class AttentionSystem extends EntitySystem {
     public void addedToEngine (Engine engine) {
         for (Shape shape : Shape.values()) {
             shape.attention = shape.maxAttention = Constants.BASE_ATTENTION;
+            shape.moneyPerPerson = Constants.BASE_MONEY_PER_PERSON;
+            shape.entertainment = Constants.BASE_ENTERTAINMENT;
         }
     }
 
     public void update (float deltaTime) {
-        UISystem ui = getEngine().getSystem(UISystem.class);
-
         if (Player.selected == null) return;
         for (Shape shape : Shape.values()) {
             if (Player.selected == shape) shape.attention -= deltaTime;

@@ -17,6 +17,7 @@ public enum Shape {
     public float attention;
     public float maxAttention = Constants.BASE_ATTENTION;
     public float moneyPerPerson = Constants.BASE_MONEY_PER_PERSON;
+    public float entertainment = Constants.BASE_ENTERTAINMENT;
 
     public Table selectTable;
     public Label label;

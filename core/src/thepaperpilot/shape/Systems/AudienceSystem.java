@@ -14,6 +14,8 @@ import thepaperpilot.shape.Player;
 import thepaperpilot.shape.Util.Constants;
 import thepaperpilot.shape.Util.Mappers;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 
 public class AudienceSystem extends EntitySystem {
@@ -41,7 +43,7 @@ public class AudienceSystem extends EntitySystem {
     }
 
     public void update (float deltaTime) {
-        if (Player.audience.intValue() > people) {
+        if (Player.audience.round(MathContext.DECIMAL32).compareTo(BigDecimal.valueOf(people)) > 0) {
             Entity entity = new Entity();
             entity.add(new ActorComponent());
             ActorComponent ac = new ActorComponent();
@@ -58,7 +60,7 @@ public class AudienceSystem extends EntitySystem {
             people += auc.people;
             audience.add(entity);
             getEngine().addEntity(entity);
-        } else if (Player.audience.intValue() < people) {
+        } else if (Player.audience.round(MathContext.DECIMAL32).compareTo(BigDecimal.valueOf(people - 1)) < 0) {
             for (final Entity entity : audience) {
                 ActorComponent ac = Mappers.actor.get(entity);
                 AudienceComponent auc = Mappers.audience.get(entity);
@@ -74,6 +76,7 @@ public class AudienceSystem extends EntitySystem {
                         getEngine().removeEntity(entity);
                     }
                 })));
+                break;
             }
         }
     }
