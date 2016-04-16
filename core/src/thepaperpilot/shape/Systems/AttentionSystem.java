@@ -18,9 +18,15 @@ public class AttentionSystem extends EntitySystem {
     }
 
     public void update (float deltaTime) {
+        UISystem ui = getEngine().getSystem(UISystem.class);
+
+        if (ui == null) return;
+        if (ui.selected == null) return;
         for (Shape shape : Shape.values()) {
-            shape.attention -= deltaTime;
+            if (ui.selected == shape) shape.attention -= deltaTime;
+            else shape.attention += deltaTime * Constants.UNBORE_MOD;
             if (shape.attention < 0) shape.attention = 0;
+            if (shape.attention > shape.maxAttention) shape.attention = shape.maxAttention;
         }
     }
 }

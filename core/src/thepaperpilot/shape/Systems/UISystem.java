@@ -18,10 +18,11 @@ public class UISystem extends EntitySystem {
         super(10);
     }
 
-    // suuuper temporary
-    Shape selected;
+    public Shape selected;
 
     public void addedToEngine (Engine engine) {
+        selected = Shape.SQUARE;
+
         Table ui = new Table(Main.skin);
         ui.setFillParent(true);
         ui.top();
@@ -43,6 +44,7 @@ public class UISystem extends EntitySystem {
                     selected.label.setColor(Color.ORANGE);
                 }
             });
+            if (selected == shape) selected.label.setColor(Color.ORANGE);
         }
         bottom.add(shapes).expandY().width(200).fill().expandX().left().pad(Constants.PADDING);
 
