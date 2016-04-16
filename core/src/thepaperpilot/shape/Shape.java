@@ -3,7 +3,9 @@ package thepaperpilot.shape;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import thepaperpilot.shape.Util.Constants;
 
 public enum Shape {
     SQUARE("square", "square"),
@@ -11,18 +13,24 @@ public enum Shape {
 
     public String image;
     public String name;
-    public Table table;
+    public float attention;
+    public float maxAttention = Constants.BASE_ATTENTION;
+
+    public Table selectTable;
     public Label label;
+    public ProgressBar attentionBar;
 
     Shape(String imageString, String name) {
         this.image = imageString;
         this.name = name;
 
-        table = new Table(Main.skin);
-        table.setTouchable(Touchable.enabled);
+        selectTable = new Table(Main.skin);
+        selectTable.setTouchable(Touchable.enabled);
         Image image = new Image(Main.getTexture(imageString));
-        table.add(image).size(32).spaceRight(4);
+        selectTable.add(image).size(32).spaceRight(4);
         label = new Label(name, Main.skin);
-        table.add(label);
+        selectTable.add(label).width(100);
+        attentionBar = new ProgressBar(0, maxAttention, 1, false, Main.skin);
+        selectTable.add(attentionBar).width(80);
     }
 }

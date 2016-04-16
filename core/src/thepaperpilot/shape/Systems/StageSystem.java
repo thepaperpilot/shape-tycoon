@@ -8,6 +8,7 @@ public class StageSystem extends EntitySystem {
     private Stage stage;
 
     public StageSystem(Stage stage) {
+        super(20);
         this.stage = stage;
     }
 

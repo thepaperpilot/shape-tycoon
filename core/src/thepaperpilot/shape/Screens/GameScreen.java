@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import thepaperpilot.shape.Components.ActorComponent;
 import thepaperpilot.shape.Listeners.ActorListener;
+import thepaperpilot.shape.Systems.AttentionSystem;
 import thepaperpilot.shape.Systems.StageSystem;
 import thepaperpilot.shape.Systems.UISystem;
 import thepaperpilot.shape.Util.Constants;
@@ -24,8 +25,9 @@ public class GameScreen implements Screen {
         engine.addEntityListener(Family.all(ActorComponent.class).get(), 10, new ActorListener(stage));
 
         // Systems
-        engine.addSystem(new StageSystem(stage));
-        engine.addSystem(new UISystem());
+        engine.addSystem(new StageSystem(stage)); //priority 20
+        engine.addSystem(new UISystem()); // priority 10
+        engine.addSystem(new AttentionSystem()); //priority 5
     }
 
     @Override

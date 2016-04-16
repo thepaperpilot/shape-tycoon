@@ -1,7 +1,8 @@
 package thepaperpilot.shape.Util;
 
 public class Constants {
-    /* Speed */
+    /* Balancing */
+    public static final float BASE_ATTENTION = 100;
 
     /* Sizes */
     public static final float WORLD_WIDTH = 1280;
