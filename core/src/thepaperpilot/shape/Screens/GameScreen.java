@@ -35,6 +35,7 @@ public class GameScreen implements Screen {
         engine.addSystem(new MoneySystem()); //priority 2
         engine.addSystem(new AudienceSystem()); //priority 1
         engine.addSystem(new IdleAnimationSystem()); //priority 5
+        engine.addSystem(new ParticleEffectSystem(stage.getBatch())); //priority 25
 
         // debug
         stage.addListener(new InputListener() {

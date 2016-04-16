@@ -3,18 +3,21 @@ package thepaperpilot.shape.Systems;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import thepaperpilot.shape.Components.ActorComponent;
 import thepaperpilot.shape.Components.IdleAnimationComponent;
+import thepaperpilot.shape.Components.ParticleEffectComponent;
 import thepaperpilot.shape.Main;
 import thepaperpilot.shape.Player;
 import thepaperpilot.shape.Shape;
@@ -24,6 +27,8 @@ import thepaperpilot.shape.Util.Mappers;
 import java.text.DecimalFormat;
 
 public class UISystem extends EntitySystem {
+
+    private Table HUD;
 
     public UISystem() {
         super(10);
@@ -43,7 +48,7 @@ public class UISystem extends EntitySystem {
         ui.setFillParent(true);
         ui.bottom();
 
-        Table HUD = new Table(Main.skin);
+        HUD = new Table(Main.skin);
         money = new Label("", Main.skin);
         rank = new Label("", Main.skin, "large");
         rankContainer = new Container(rank);
@@ -59,6 +64,7 @@ public class UISystem extends EntitySystem {
         Table shapes = new Table(Main.skin);
         shapes.left().top();
         for (final Shape shape : Shape.values()) {
+            shape.engine = engine;
             shapes.add(shape.selectTable).left().spaceBottom(4).row();
             shape.selectTable.addListener(new ClickListener() {
                 @Override
@@ -112,9 +118,20 @@ public class UISystem extends EntitySystem {
         money.setText("$" + df.format(Player.money));
         rank.setText(Player.rank.string);
         if (Player.rankUp) {
+            HUD.toFront();
             rankContainer.setOrigin(Align.center);
             rankContainer.clearActions();
-            rankContainer.addAction(Actions.sequence(Actions.scaleTo(2, 2, Constants.ANIM_SPEED, Interpolation.pow2), Actions.scaleTo(1, 1, Constants.ANIM_SPEED, Interpolation.pow2)));
+            rankContainer.addAction(Actions.sequence(Actions.scaleTo(4, 4, Constants.ANIM_SPEED, Interpolation.pow2), Actions.scaleTo(1, 1, Constants.ANIM_SPEED, Interpolation.pow2)));
+            ParticleEffect effect = new ParticleEffect();
+            effect.load(Gdx.files.internal("rank.p"), Gdx.files.internal(""));
+            Vector2 pos = rankContainer.localToStageCoordinates(new Vector2(rankContainer.getOriginX(), rankContainer.getOriginY()));
+            effect.setPosition(pos.x - 100, pos.y);
+            effect.start();
+            Entity entity = new Entity();
+            ParticleEffectComponent pc = new ParticleEffectComponent();
+            pc.effect = effect;
+            entity.add(pc);
+            getEngine().addEntity(entity);
             Player.rankUp = false;
         }
         df.setMaximumFractionDigits(0);

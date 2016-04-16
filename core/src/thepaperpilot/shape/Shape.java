@@ -1,17 +1,30 @@
 package thepaperpilot.shape;
 
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import thepaperpilot.shape.Components.ActorComponent;
+import thepaperpilot.shape.Components.ParticleEffectComponent;
+import thepaperpilot.shape.Systems.AudienceSystem;
 import thepaperpilot.shape.Util.Constants;
+import thepaperpilot.shape.Util.Mappers;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public enum Shape {
-    SQUARE("square", "square", 1),
-    CIRCLE("circle", "circle", 1.5f);
+    SQUARE("square", "square", 1.2f),
+    CIRCLE("circle", "circle", 1.4f);
+
+    public Engine engine;
 
     public String image;
     public String name;
@@ -91,6 +104,7 @@ public enum Shape {
                 attLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_ATT_COST * attLevel, mod));
                 attLevelLabel.setText("" + attLevel);
                 attButton.setText("$" + df.format(attLevelCost));
+                upgradeEffect(engine);
             }
         });
         attUpgrade.add(attButton).expandX().fill().expandY().pad(4).colspan(2);
@@ -114,6 +128,7 @@ public enum Shape {
                 maxAttLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_MAX_ATT_COST * maxAttLevel, mod));
                 maxAttLevelLabel.setText("" + maxAttLevel);
                 maxAttButton.setText("$" + df.format(maxAttLevelCost));
+                upgradeEffect(engine);
             }
         });
         maxAttUpgrade.add(maxAttButton).expandX().fill().expandY().pad(4).colspan(2);
@@ -136,6 +151,7 @@ public enum Shape {
                 effLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_EFF_COST * effLevel, mod));
                 effLevelLabel.setText("" + effLevel);
                 effButton.setText("$" + df.format(effLevelCost));
+                upgradeEffect(engine);
             }
         });
         efficiencyUpgrade.add(effButton).expandX().fill().expandY().pad(4).colspan(2);
@@ -158,6 +174,7 @@ public enum Shape {
                 entLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_ENT_COST * entLevel, mod));
                 entLevelLabel.setText("" + entLevel);
                 entButton.setText("$" + df.format(entLevelCost));
+                upgradeEffect(engine);
             }
         });
         entertainmentUpgrade.add(entButton).expandX().fill().expandY().pad(4).colspan(2);
@@ -180,9 +197,28 @@ public enum Shape {
                 boreLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_BORE_COST * boreLevel, mod));
                 boreLevelLabel.setText("" + boreLevel);
                 boreButton.setText("$" + df.format(boreLevelCost));
+                upgradeEffect(engine);
             }
         });
         boreUpgrade.add(boreButton).expandX().fill().expandY().pad(4).colspan(2);
         upgradeTable.add(boreUpgrade).expandY().fill().pad(4).expandX();
+    }
+
+    public void upgradeEffect(Engine engine) {
+        ParticleEffect effect = new ParticleEffect();
+        effect.load(Gdx.files.internal("upgrade.p"), Gdx.files.internal(""));
+        effect.setPosition(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT - (Constants.WORLD_HEIGHT - Constants.UI_HEIGHT) / 2f);
+        effect.start();
+        Entity entity = new Entity();
+        ParticleEffectComponent pc = new ParticleEffectComponent();
+        pc.effect = effect;
+        entity.add(pc);
+        engine.addEntity(entity);
+
+        for (Entity person : engine.getSystem(AudienceSystem.class).audience) {
+            ActorComponent ac = Mappers.actor.get(person);
+
+            ac.actor.addAction(Actions.sequence(Actions.delay(MathUtils.random()), Actions.repeat(MathUtils.random(5), Actions.sequence(Actions.moveBy(0, 40, .5f, Interpolation.pow2), Actions.moveBy(0, -40, .5f, Interpolation.pow2)))));
+        }
     }
 }

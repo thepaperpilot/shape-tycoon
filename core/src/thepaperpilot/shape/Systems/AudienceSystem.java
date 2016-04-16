@@ -22,7 +22,7 @@ public class AudienceSystem extends EntitySystem {
 
     public Entity player;
     int people = 0;
-    ArrayList<Entity> audience = new ArrayList<Entity>();
+    public ArrayList<Entity> audience = new ArrayList<Entity>();
 
     public AudienceSystem() {
         super(1);
