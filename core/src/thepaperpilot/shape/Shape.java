@@ -3,6 +3,7 @@ package thepaperpilot.shape;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -22,13 +23,15 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public enum Shape {
-    SQUARE("square", "square", 1.2f),
-    CIRCLE("circle", "circle", 1.4f),
-    TRIANGLE("triangle", "triangle", 1.6f);
+    SQUARE("square", "square", "square", 1.2f),
+    CIRCLE("circle", "circle", "circle", 1.4f),
+    TRIANGLE("triangle", "triangle", "triangle", 1.6f);
 
     public Engine engine;
 
     public String image;
+    public long id;
+    public Sound bgm;
     public String name;
     public float mod;
 
@@ -63,8 +66,10 @@ public enum Shape {
     public ProgressBar attentionBar;
     public Table upgradeTable;
 
-    Shape(String imageString, String name, final float mod) {
+    Shape(String imageString, String bgmString, String name, final float mod) {
         this.image = imageString;
+        this.bgm = Main.getBGM(bgmString);
+        this.id = this.bgm.loop(0);
         this.name = name;
         this.mod = mod;
 

@@ -32,4 +32,7 @@ public class Constants {
     /* DEBUG */
     public static final boolean PROFILING = false;
     public static final float DELTA_MOD = 1;
+
+    /* Other */
+    public static final float MASTER_VOLUME = 1;
 }

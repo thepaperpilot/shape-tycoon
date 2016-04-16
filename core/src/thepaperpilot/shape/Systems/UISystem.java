@@ -77,6 +77,7 @@ public class UISystem extends EntitySystem {
                     }
                     shape.selectTable.setBackground(Main.skin.getDrawable("default-round-down"));
                     Player.selected = shape;
+                    Main.changeBGM(shape.bgm, shape.id);
                     upgradeTable.clearChildren();
                     upgradeTable.add(Player.selected.upgradeTable).expand().fill();
 
@@ -97,6 +98,7 @@ public class UISystem extends EntitySystem {
             });
             if (Player.selected == shape) {
                 shape.selectTable.setBackground(Main.skin.getDrawable("default-round-down"));
+                Main.changeBGM(shape.bgm, shape.id);
             }
         }
         bottom.add(shapes).expandY().fill().pad(Constants.PADDING);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.profiling.GLProfiler;
@@ -22,6 +23,11 @@ public class Main extends Game implements Screen {
 	public static Skin skin;
 	public static Main instance;
 	private static Stage loadingStage;
+	private static Sound bgm;
+	private static long bgmId;
+	private static Sound newBGM;
+	private static long newId;
+	private static float transition = 1;
 
 	public static void changeScreen(Screen screen) {
 		if (screen == null)
@@ -39,6 +45,9 @@ public class Main extends Game implements Screen {
 
 		// start loading all our assets
 		manager.load("skin.json", Skin.class);
+		manager.load("circle.mp3", Sound.class);
+		manager.load("square.mp3", Sound.class);
+		manager.load("triangle.mp3", Sound.class);
 
 		changeScreen(this);
 	}
@@ -127,6 +136,22 @@ public class Main extends Game implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		// Transition bgms
+		if (transition != 1) {
+			if (transition > 1 || bgm == null) {
+				transition = 1;
+				if (bgm != null) bgm.setVolume(bgmId, 0);
+				bgm = newBGM;
+				bgmId = newId;
+				bgm.setVolume(bgmId, .5f);
+				newBGM = null;
+			} else {
+				transition += Gdx.graphics.getDeltaTime();
+				bgm.setVolume(bgmId, (1 - transition) / 2);
+				newBGM.setVolume(newId, transition / 2);
+			}
+		}
+
 		getScreen().render(Gdx.graphics.getDeltaTime() * Constants.DELTA_MOD);
 
 		if (Constants.PROFILING) {
@@ -145,5 +170,27 @@ public class Main extends Game implements Screen {
 		manager.load(name, Texture.class);
 		manager.finishLoadingAsset(name);
 		return Main.manager.get(name, Texture.class);
+	}
+
+	public static Sound getBGM(String bgm) {
+		bgm += ".mp3";
+		manager.load(bgm, Sound.class);
+		manager.finishLoadingAsset(bgm);
+		return manager.get(bgm, Sound.class);
+	}
+
+	public static void changeBGM(Sound bgm, long id) {
+		newBGM = bgm;
+		if (Main.bgm != newBGM) {
+			transition = 0;
+			newId = id;
+		}
+	}
+
+	public static void playSound(String sound) {
+		sound += ".mp3";
+		manager.load(sound, Sound.class);
+		manager.finishLoading();
+		Main.manager.get(sound, Sound.class).play(Constants.MASTER_VOLUME);
 	}
 }
