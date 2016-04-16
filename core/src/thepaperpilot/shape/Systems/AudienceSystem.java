@@ -65,6 +65,10 @@ public class AudienceSystem extends EntitySystem {
             people += auc.people;
             audience.add(entity);
             getEngine().addEntity(entity);
+            while (audience.size() > Constants.MAX_AUDIENCE) {
+                getEngine().removeEntity(audience.get(0));
+                audience.remove(0);
+            }
         } else if (Player.audience.round(MathContext.DECIMAL32).compareTo(BigDecimal.valueOf(people - 1)) < 0) {
             for (final Entity entity : audience) {
                 ActorComponent ac = Mappers.actor.get(entity);
