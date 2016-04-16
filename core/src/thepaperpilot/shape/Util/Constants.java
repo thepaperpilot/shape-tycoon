@@ -13,6 +13,7 @@ public class Constants {
 
     /* Speeds */
     public static final float ANIM_SPEED = .5f;
+    public static final float IDLE_CHANCE = .001f;
 
     /* DEBUG */
     public static final boolean PROFILING = false;

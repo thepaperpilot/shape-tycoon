@@ -13,10 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import thepaperpilot.shape.Components.ActorComponent;
+import thepaperpilot.shape.Components.IdleAnimationComponent;
 import thepaperpilot.shape.Main;
 import thepaperpilot.shape.Player;
 import thepaperpilot.shape.Shape;
 import thepaperpilot.shape.Util.Constants;
+import thepaperpilot.shape.Util.Mappers;
 
 import java.text.DecimalFormat;
 
@@ -63,6 +65,13 @@ public class UISystem extends EntitySystem {
                     }
                     Player.selected = shape;
                     Player.selected.label.setColor(Color.ORANGE);
+                    AudienceSystem as = getEngine().getSystem(AudienceSystem.class);
+                    if (as != null && as.player != null && Mappers.idleAnimation.has(as.player)) {
+                        IdleAnimationComponent ic = Mappers.idleAnimation.get(as.player);
+
+                        ic.file = Player.selected.image;
+                        ic.update = true;
+                    }
                 }
             });
             if (Player.selected == shape) Player.selected.label.setColor(Color.ORANGE);

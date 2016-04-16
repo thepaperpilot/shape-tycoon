@@ -10,11 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import thepaperpilot.shape.Components.ActorComponent;
+import thepaperpilot.shape.Components.IdleAnimationComponent;
 import thepaperpilot.shape.Listeners.ActorListener;
-import thepaperpilot.shape.Systems.AttentionSystem;
-import thepaperpilot.shape.Systems.MoneySystem;
-import thepaperpilot.shape.Systems.StageSystem;
-import thepaperpilot.shape.Systems.UISystem;
+import thepaperpilot.shape.Listeners.IdleAnimationListener;
+import thepaperpilot.shape.Systems.*;
 import thepaperpilot.shape.Util.Constants;
 
 public class GameScreen implements Screen {
@@ -27,12 +26,15 @@ public class GameScreen implements Screen {
 
         // Listeners
         engine.addEntityListener(Family.all(ActorComponent.class).get(), 10, new ActorListener(stage));
+        engine.addEntityListener(Family.all(ActorComponent.class, IdleAnimationComponent.class).get(), 5, new IdleAnimationListener());
 
         // Systems
         engine.addSystem(new StageSystem(stage)); //priority 20
         engine.addSystem(new UISystem()); // priority 10
         engine.addSystem(new AttentionSystem()); //priority 5
         engine.addSystem(new MoneySystem()); //priority 2
+        engine.addSystem(new AudienceSystem()); //priority 1
+        engine.addSystem(new IdleAnimationSystem()); //priority 5
 
         // debug
         stage.addListener(new InputListener() {
