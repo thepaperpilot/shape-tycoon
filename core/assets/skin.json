@@ -16,16 +16,6 @@
   toggle-large: {down: default-round-down, up: default-round, checked: default-round-down, font: large, fontColor: white },
   large: { down: default-round-down, up: default-round, font: large, fontColor: white }
 },
-  com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
-  default: { hScrollKnob: default-slider, background: default-round, vScrollKnob: default-slider }
-},
-  com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
-  default: { titleFont: font, background: default-window, titleFontColor: white },
-  large: {titleFont: large, background: default-window, titleFontColor: white}
-},
-  com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
-  default-horizontal: { background: default-slider, knob: default-slider-knob }
-},
   com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
   default: { font: font, fontColor: white },
   dialogue: { font: large, fontColor: white, background: default-round },
@@ -34,11 +24,8 @@
   com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
   default: { background: default-round-down, font: font, fontColor: grey }
 },
-  com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
-  default: { checkboxOn: check-on, checkboxOff: check-off, font: font, fontColor: white }
-},
   com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
-  default-horizontal: { background: new-horizontal-progress-bar, knobBefore: new-horizontal-slider },
-  default-vertical: { background: new-vertical-progress-bar, knobBefore: new-vertical-slider }
+  default-horizontal: { background: horizontal-bar, knobBefore: horizontal-slider },
+  default-vertical: { background: vertical-bar, knobBefore: vertical-slider }
 },
 }

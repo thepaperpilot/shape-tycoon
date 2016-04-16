@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import thepaperpilot.shape.Components.ActorComponent;
 import thepaperpilot.shape.Listeners.ActorListener;
 import thepaperpilot.shape.Systems.StageSystem;
+import thepaperpilot.shape.Systems.UISystem;
 import thepaperpilot.shape.Util.Constants;
 
 public class GameScreen implements Screen {
@@ -24,6 +25,7 @@ public class GameScreen implements Screen {
 
         // Systems
         engine.addSystem(new StageSystem(stage));
+        engine.addSystem(new UISystem());
     }
 
     @Override
