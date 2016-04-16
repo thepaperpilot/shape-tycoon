@@ -54,7 +54,10 @@ public class UISystem extends EntitySystem {
         rankContainer = new Container(rank);
         rankContainer.setTransform(true);
         audience = new Label("", Main.skin);
-        HUD.bottom().add(money).expandX().uniform();
+        HUD.bottom().add("bank").expandX().uniform();
+        HUD.add("rank").expandX().uniform();
+        HUD.add("audience").expandX().uniform().row();
+        HUD.add(money).expandX().uniform();
         HUD.add(rankContainer).expandX().fill().uniform();
         HUD.add(audience).expandX().uniform();
         ui.add(HUD).expandX().fill().expandY().row();

@@ -2,16 +2,16 @@ Untitled
 - Delay -
 active: false
 - Duration - 
-lowMin: 1000.0
-lowMax: 1000.0
+lowMin: 2000.0
+lowMax: 2000.0
 - Count - 
 min: 0
 max: 2000
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 1000.0
-highMax: 1000.0
+highMin: 200.0
+highMax: 200.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -78,19 +78,21 @@ timeline0: 0.0
 active: true
 lowMin: 0.0
 lowMax: 0.0
-highMin: 400.0
-highMax: 600.0
+highMin: 600.0
+highMax: 800.0
 relative: false
-scalingCount: 1
+scalingCount: 2
 scaling0: 1.0
-timelineCount: 1
+scaling1: 0.0
+timelineCount: 2
 timeline0: 0.0
+timeline1: 1.0
 - Angle - 
 active: true
 lowMin: -90.0
 lowMax: 270.0
-highMin: 80.0
-highMax: 100.0
+highMin: 90.0
+highMax: 90.0
 relative: false
 scalingCount: 2
 scaling0: 1.0
@@ -146,4 +148,4 @@ additive: true
 behind: false
 premultipliedAlpha: false
 - Image Path -
-particle.png
+/home/anthony/projects/shapeshifter/particle.png
