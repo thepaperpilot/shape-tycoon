@@ -11,7 +11,11 @@ public class Constants {
     public static final float UI_HEIGHT = 200;
     public static final float PADDING = 10;
 
+    /* Speeds */
+    public static final float ANIM_SPEED = .5f;
+
     /* DEBUG */
     public static final boolean PROFILING = false;
     public static final float DELTA_MOD = 1;
+    public static final float BASE_MONEY_PER_PERSON = 1;
 }

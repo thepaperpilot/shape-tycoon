@@ -13,8 +13,10 @@ public enum Shape {
 
     public String image;
     public String name;
+
     public float attention;
     public float maxAttention = Constants.BASE_ATTENTION;
+    public float moneyPerPerson = Constants.BASE_MONEY_PER_PERSON;
 
     public Table selectTable;
     public Label label;

@@ -17,3 +17,6 @@ you are a shapeshifter, performing tricks
 different shapes
 - player has to change regularly or else audience becomes bored
 - there are upgrades, but they only affect specific shapes
+
+- audience generates revenue
+- upgrades increase audience
