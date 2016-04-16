@@ -14,7 +14,6 @@ import thepaperpilot.shape.Player;
 import thepaperpilot.shape.Util.Constants;
 import thepaperpilot.shape.Util.Mappers;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class AudienceSystem extends EntitySystem {

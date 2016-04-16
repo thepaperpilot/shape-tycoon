@@ -63,14 +63,21 @@ public class UISystem extends EntitySystem {
                     if (Player.selected != null) {
                         Player.selected.label.setColor(Color.WHITE);
                     }
+                    shape.label.setColor(Color.ORANGE);
                     Player.selected = shape;
-                    Player.selected.label.setColor(Color.ORANGE);
+
                     AudienceSystem as = getEngine().getSystem(AudienceSystem.class);
                     if (as != null && as.player != null && Mappers.idleAnimation.has(as.player)) {
-                        IdleAnimationComponent ic = Mappers.idleAnimation.get(as.player);
+                        ActorComponent ac = Mappers.actor.get(as.player);
+                        final IdleAnimationComponent ic = Mappers.idleAnimation.get(as.player);
 
-                        ic.file = Player.selected.image;
-                        ic.update = true;
+                        ac.actor.addAction(Actions.sequence(Actions.moveBy(200, 0, Constants.ANIM_SPEED, Interpolation.pow2), Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                ic.file = Player.selected.image;
+                                ic.update = true;
+                            }
+                        }), Actions.moveBy(-200, 0, Constants.ANIM_SPEED, Interpolation.pow2)));
                     }
                 }
             });
