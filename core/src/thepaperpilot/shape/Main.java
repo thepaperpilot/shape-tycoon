@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import thepaperpilot.shape.Screens.GameScreen;
+import thepaperpilot.shape.Screens.TitleScreen;
 import thepaperpilot.shape.Util.Constants;
 
 public class Main extends Game implements Screen {
@@ -85,7 +85,7 @@ public class Main extends Game implements Screen {
 				skin.getFont("font").getData().markupEnabled = true;
 			}
 
-			changeScreen(new GameScreen());
+			changeScreen(new TitleScreen());
 		}
 	}
 

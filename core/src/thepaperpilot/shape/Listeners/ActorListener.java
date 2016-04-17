@@ -19,6 +19,8 @@ public class ActorListener implements EntityListener {
         ActorComponent ac = Mappers.actor.get(entity);
 
         stage.addActor(ac.actor);
+
+        ac.actor.toBack();
     }
 
     @Override
