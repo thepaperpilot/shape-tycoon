@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -225,9 +226,14 @@ public enum Shape {
         engine.addEntity(entity);
 
         for (Entity person : engine.getSystem(AudienceSystem.class).audience) {
-            ActorComponent ac = Mappers.actor.get(person);
+            Actor actor;
+            if (Mappers.actor.has(person))
+                actor = Mappers.actor.get(person).actor;
+            else if (Mappers.audienceActor.has(person))
+                actor = Mappers.audienceActor.get(person).actor;
+            else return;
 
-            ac.actor.addAction(Actions.sequence(Actions.delay(MathUtils.random()), Actions.repeat(MathUtils.random(5), Actions.sequence(Actions.moveBy(0, 40, .5f, Interpolation.pow2), Actions.moveBy(0, -40, .5f, Interpolation.pow2)))));
+            actor.addAction(Actions.sequence(Actions.delay(MathUtils.random()), Actions.repeat(MathUtils.random(5), Actions.sequence(Actions.moveBy(0, 40, .5f, Interpolation.pow2), Actions.moveBy(0, -40, .5f, Interpolation.pow2)))));
         }
 
         final Entity message = new Entity();

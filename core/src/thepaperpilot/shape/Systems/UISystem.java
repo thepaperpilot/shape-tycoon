@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
@@ -83,16 +84,21 @@ public class UISystem extends EntitySystem {
 
                     AudienceSystem as = getEngine().getSystem(AudienceSystem.class);
                     if (as != null && as.player != null && Mappers.idleAnimation.has(as.player)) {
-                        ActorComponent ac = Mappers.actor.get(as.player);
+                        Actor actor;
+                        if (Mappers.actor.has(as.player))
+                            actor = Mappers.actor.get(as.player).actor;
+                        else if (Mappers.audienceActor.has(as.player))
+                            actor = Mappers.audienceActor.get(as.player).actor;
+                        else return;
                         final IdleAnimationComponent ic = Mappers.idleAnimation.get(as.player);
 
-                        ac.actor.addAction(Actions.sequence(Actions.moveBy(200, 0, Constants.ANIM_SPEED, Interpolation.pow2), Actions.run(new Runnable() {
+                        actor.addAction(Actions.sequence(Actions.moveBy(0, -200, Constants.ANIM_SPEED, Interpolation.pow2), Actions.run(new Runnable() {
                             @Override
                             public void run() {
                                 ic.file = Player.selected.image;
                                 ic.update = true;
                             }
-                        }), Actions.moveBy(-200, 0, Constants.ANIM_SPEED, Interpolation.pow2)));
+                        }), Actions.moveBy(0, 200, Constants.ANIM_SPEED, Interpolation.pow2)));
                     }
                 }
             });

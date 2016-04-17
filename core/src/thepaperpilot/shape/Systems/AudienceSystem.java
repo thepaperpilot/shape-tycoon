@@ -5,10 +5,13 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import thepaperpilot.shape.Components.ActorComponent;
+import thepaperpilot.shape.Components.AudienceActorComponent;
 import thepaperpilot.shape.Components.AudienceComponent;
 import thepaperpilot.shape.Components.IdleAnimationComponent;
 import thepaperpilot.shape.Player;
@@ -34,7 +37,8 @@ public class AudienceSystem extends EntitySystem {
         ActorComponent ac = new ActorComponent();
         IdleAnimationComponent ic = new IdleAnimationComponent();
         ac.actor = new Image();
-        ac.actor.setPosition(Constants.WORLD_WIDTH - 100, Constants.WORLD_HEIGHT - (Constants.WORLD_HEIGHT - Constants.UI_HEIGHT) / 2f);
+        ac.actor.setPosition(Constants.WORLD_WIDTH / 2f - 32, Constants.UI_HEIGHT + 64);
+        ac.actor.setOrigin(Align.center);
         ac.actor.setSize(64, 64);
         ac.actor.addAction(Actions.forever(Actions.delay(3.6f, Actions.sequence(Actions.moveBy(0, 40, 1, Interpolation.pow2), Actions.moveBy(0, -40, 1, Interpolation.pow2)))));
         ac.actor.addAction(Actions.forever(Actions.delay(2f, Actions.rotateBy(360, 1))));
@@ -49,14 +53,16 @@ public class AudienceSystem extends EntitySystem {
     public void update (float deltaTime) {
         if (Player.audience.round(MathContext.DECIMAL32).compareTo(BigDecimal.valueOf(people)) > 0) {
             Entity entity = new Entity();
-            entity.add(new ActorComponent());
-            ActorComponent ac = new ActorComponent();
+            AudienceActorComponent ac = new AudienceActorComponent();
             IdleAnimationComponent ic = new IdleAnimationComponent();
             AudienceComponent auc = new AudienceComponent();
             ac.actor = new Image();
-            ac.actor.setPosition(-50, MathUtils.random(Constants.UI_HEIGHT + 50, Constants.WORLD_HEIGHT - 50));
+            float angle = MathUtils.random(0, 180);
+            float x = Constants.WORLD_WIDTH / 2f - 32;
+            float y = Constants.UI_HEIGHT + 64;
+            ac.actor.setPosition(x + MathUtils.cosDeg(angle) * (200 + 16 * audience.size()), y + MathUtils.sinDeg(angle) * (200 + 16 * audience.size()));
             ac.actor.setSize(64, 64);
-            ac.actor.addAction(Actions.moveBy(MathUtils.random(100, Constants.WORLD_WIDTH - 200), 0, 1, Interpolation.pow2));
+            ac.actor.addAction(Actions.moveTo(x + MathUtils.cosDeg(angle) * MathUtils.random(100, 100 + 8 * audience.size()), y + MathUtils.sinDeg(angle) * MathUtils.random(100, 100 + 8 * audience.size()), 1, Interpolation.pow2));
             ic.file = "line";
             ic.chance = 1;
             entity.add(ac);
@@ -71,14 +77,14 @@ public class AudienceSystem extends EntitySystem {
             }
         } else if (Player.audience.round(MathContext.DECIMAL32).compareTo(BigDecimal.valueOf(people - 1)) < 0) {
             for (final Entity entity : audience) {
-                ActorComponent ac = Mappers.actor.get(entity);
+                AudienceActorComponent ac = Mappers.audienceActor.get(entity);
                 AudienceComponent auc = Mappers.audience.get(entity);
 
                 if (ac.actor.hasActions()) continue;
 
                 people -= auc.people;
 
-                ac.actor.addAction(Actions.sequence(Actions.moveBy(-Constants.WORLD_WIDTH, 0, 1, Interpolation.pow2), Actions.run(new Runnable() {
+                ac.actor.addAction(Actions.sequence(Actions.moveBy(0, 200 + 16 * audience.size(), 1, Interpolation.pow2), Actions.run(new Runnable() {
                     @Override
                     public void run() {
                         audience.remove(entity);

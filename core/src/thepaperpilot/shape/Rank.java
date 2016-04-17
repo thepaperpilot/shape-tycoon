@@ -9,8 +9,8 @@ public class Rank {
     static {
         // TODO load in via properties file?
         Rank rank;
-        BASE_RANK = new Rank("1", "Just You");
         //noinspection UnusedAssignment
+        BASE_RANK = rank = new Rank("1", "Just You");
         rank.next = rank = new Rank("7", "DnD group");
         rank.next = rank = new Rank("20", "Raid group");
         rank.next = rank = new Rank("30", "Classroom");
