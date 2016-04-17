@@ -26,6 +26,14 @@ default-round-down
   orig: 14, 13
   offset: 0, 0
   index: -1
+default-round-trans
+  rotate: false
+  xy: 1, 16
+  size: 14, 13
+  split: 5, 5, 5, 5
+  orig: 14, 13
+  offset: 0, 0
+  index: -1
 horizontal-bar
   rotate: false
   xy: 1, 1

@@ -24,7 +24,7 @@ import thepaperpilot.shape.Systems.*;
 import thepaperpilot.shape.Util.Constants;
 
 public class GameScreen implements Screen {
-    private Engine engine;
+    public Engine engine;
     private Stage ui;
     private Stage stage;
 

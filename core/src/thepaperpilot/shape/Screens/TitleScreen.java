@@ -15,6 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import thepaperpilot.shape.Main;
+import thepaperpilot.shape.Systems.AttentionSystem;
+import thepaperpilot.shape.Systems.AudienceSystem;
+import thepaperpilot.shape.Systems.MoneySystem;
+import thepaperpilot.shape.Systems.TutorialSystem;
 import thepaperpilot.shape.Util.Constants;
 
 public class TitleScreen implements Screen {
@@ -66,22 +70,35 @@ public class TitleScreen implements Screen {
                 })));
             }
         };
-        final Option exit = new Option("Exit Game") {
+        final Option tutorial = new Option("Tutorial") {
             @Override
             public void run() {
-                stage.addAction(Actions.sequence(Actions.fadeOut(1), Actions.run(new Runnable() {
+                left.addAction(Actions.sequence(Actions.moveBy(.5f * Constants.WORLD_WIDTH, 0, 1, Interpolation.bounceOut)));
+                right.addAction(Actions.sequence(Actions.moveBy(-.5f * Constants.WORLD_WIDTH, 0, 1, Interpolation.bounceOut), Actions.delay(.2f), Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        Gdx.app.exit();
+                        GameScreen gs = new GameScreen();
+                        gs.engine.getSystem(AttentionSystem.class).setProcessing(false);
+                        gs.engine.getSystem(AudienceSystem.class).setProcessing(false);
+                        gs.engine.getSystem(MoneySystem.class).setProcessing(false);
+                        gs.engine.addSystem(new TutorialSystem(gs.left, gs.right));
+                        Main.changeScreen(gs);
                     }
                 })));
             }
         };
+        final Option exit = new Option("Exit Game") {
+            @Override
+            public void run() {
+                Gdx.app.exit();
+            }
+        };
         optionsTable.add(continueGame).center().row();
+        optionsTable.add(tutorial).center().row();
         optionsTable.add(exit).center().row();
         stage.addActor(optionsTable);
 
-        this.options = new Option[]{continueGame, exit};
+        this.options = new Option[]{continueGame, tutorial, exit};
         updateSelected(continueGame);
 
         stage.addActor(left);
@@ -100,14 +117,18 @@ public class TitleScreen implements Screen {
                     case Input.Keys.A:
                         if (selected == continueGame) {
                             updateSelected(exit);
-                        } else if (selected == exit) {
+                        } else if (selected == tutorial) {
                             updateSelected(continueGame);
+                        } else if (selected == exit) {
+                            updateSelected(tutorial);
                         }
                         break;
                     case Input.Keys.DOWN:
                     case Input.Keys.S:
                     case Input.Keys.D:
                         if (selected == continueGame) {
+                            updateSelected(tutorial);
+                        } else if (selected == tutorial) {
                             updateSelected(exit);
                         } else if (selected == exit) {
                             updateSelected(continueGame);
