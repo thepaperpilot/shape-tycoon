@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -112,7 +113,7 @@ public enum Shape {
                 attLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_ATT_COST * attLevel, mod));
                 attLevelLabel.setText("" + attLevel);
                 attButton.setText("$" + df.format(attLevelCost));
-                upgradeEffect(engine);
+                upgradeEffect(engine, attButton.localToStageCoordinates(new Vector2(attButton.getOriginX(), attButton.getOriginY())).x);
             }
         });
         attUpgrade.add(attButton).expandX().fill().expandY().pad(4).colspan(2);
@@ -136,7 +137,7 @@ public enum Shape {
                 maxAttLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_MAX_ATT_COST * maxAttLevel, mod));
                 maxAttLevelLabel.setText("" + maxAttLevel);
                 maxAttButton.setText("$" + df.format(maxAttLevelCost));
-                upgradeEffect(engine);
+                upgradeEffect(engine, maxAttButton.localToStageCoordinates(new Vector2(maxAttButton.getOriginX(), maxAttButton.getOriginY())).x);
             }
         });
         maxAttUpgrade.add(maxAttButton).expandX().fill().expandY().pad(4).colspan(2);
@@ -159,7 +160,7 @@ public enum Shape {
                 effLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_EFF_COST * effLevel, mod));
                 effLevelLabel.setText("" + effLevel);
                 effButton.setText("$" + df.format(effLevelCost));
-                upgradeEffect(engine);
+                upgradeEffect(engine, effButton.localToStageCoordinates(new Vector2(effButton.getOriginX(), effButton.getOriginY())).x);
             }
         });
         efficiencyUpgrade.add(effButton).expandX().fill().expandY().pad(4).colspan(2);
@@ -182,7 +183,7 @@ public enum Shape {
                 entLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_ENT_COST * entLevel, mod));
                 entLevelLabel.setText("" + entLevel);
                 entButton.setText("$" + df.format(entLevelCost));
-                upgradeEffect(engine);
+                upgradeEffect(engine, entButton.localToStageCoordinates(new Vector2(entButton.getOriginX(), entButton.getOriginY())).x);
             }
         });
         entertainmentUpgrade.add(entButton).expandX().fill().expandY().pad(4).colspan(2);
@@ -205,14 +206,14 @@ public enum Shape {
                 boreLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_BORE_COST * boreLevel, mod));
                 boreLevelLabel.setText("" + boreLevel);
                 boreButton.setText("$" + df.format(boreLevelCost));
-                upgradeEffect(engine);
+                upgradeEffect(engine, boreButton.localToStageCoordinates(new Vector2(boreButton.getOriginX(), boreButton.getOriginY())).x);
             }
         });
         boreUpgrade.add(boreButton).expandX().fill().expandY().pad(4).colspan(2);
         upgradeTable.add(boreUpgrade).expandY().fill().pad(4).expandX().uniform();
     }
 
-    public void upgradeEffect(Engine engine) {
+    public void upgradeEffect(final Engine engine, float x) {
         ParticleEffect effect = new ParticleEffect();
         effect.load(Gdx.files.internal("upgrade.p"), Gdx.files.internal(""));
         effect.setPosition(Constants.WORLD_WIDTH / 2f, Constants.WORLD_HEIGHT - (Constants.WORLD_HEIGHT - Constants.UI_HEIGHT) / 2f);
@@ -228,5 +229,18 @@ public enum Shape {
 
             ac.actor.addAction(Actions.sequence(Actions.delay(MathUtils.random()), Actions.repeat(MathUtils.random(5), Actions.sequence(Actions.moveBy(0, 40, .5f, Interpolation.pow2), Actions.moveBy(0, -40, .5f, Interpolation.pow2)))));
         }
+
+        final Entity message = new Entity();
+        ActorComponent ac = new ActorComponent();
+        ac.actor = new Label("level up", Main.skin);
+        ac.actor.setPosition(x + 50, Constants.UI_HEIGHT - 50);
+        ac.actor.addAction(Actions.sequence(Actions.parallel(Actions.fadeOut(1), Actions.moveBy(0, 200, 1, Interpolation.pow2)), Actions.run(new Runnable() {
+            @Override
+            public void run() {
+                engine.removeEntity(message);
+            }
+        })));
+        message.add(ac);
+        engine.addEntity(message);
     }
 }
