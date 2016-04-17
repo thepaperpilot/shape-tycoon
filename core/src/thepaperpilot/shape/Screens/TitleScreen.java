@@ -44,6 +44,7 @@ public class TitleScreen implements Screen {
         title.setFontScale(3);
         table.setPosition(Constants.WORLD_WIDTH / 2f, 2 * Constants.WORLD_HEIGHT / 3f, Align.center);
         Label sub = new Label("Shift shapes to keep the audience's attention.\nSpend money to attract larger audiences for more money!\nTry to convert the entire world.", Main.skin);
+        sub.setColor(.1289f, .2617f, .3398f, 1);
         sub.setAlignment(Align.center);
         table.add(title).spaceBottom(16).row();
         table.add(sub);
@@ -57,7 +58,7 @@ public class TitleScreen implements Screen {
             @Override
             public void run() {
                 left.addAction(Actions.sequence(Actions.moveBy(.5f * Constants.WORLD_WIDTH, 0, 1, Interpolation.bounceOut)));
-                right.addAction(Actions.sequence(Actions.moveBy(-.5f * Constants.WORLD_WIDTH, 0, 1, Interpolation.bounceOut), Actions.run(new Runnable() {
+                right.addAction(Actions.sequence(Actions.moveBy(-.5f * Constants.WORLD_WIDTH, 0, 1, Interpolation.bounceOut), Actions.delay(.2f), Actions.run(new Runnable() {
                     @Override
                     public void run() {
                         Main.changeScreen(new GameScreen());
@@ -125,10 +126,10 @@ public class TitleScreen implements Screen {
         for (Option currOption : options) {
             if (currOption == selected) {
                 currOption.setText("> " + currOption.message + " <");
-                currOption.setColor(Color.ORANGE);
+                currOption.setColor(Color.WHITE);
             } else {
                 currOption.setText(currOption.message);
-                currOption.setColor(Color.WHITE);
+                currOption.setColor(.1289f, .2617f, .3398f, 1);
             }
         }
     }
