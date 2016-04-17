@@ -1,10 +1,7 @@
 package thepaperpilot.shape.Util;
 
 import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import thepaperpilot.shape.Components.*;
-
-import java.nio.DoubleBuffer;
 
 public class Mappers {
     public static final ComponentMapper<ActorComponent> actor = ComponentMapper.getFor(ActorComponent.class);

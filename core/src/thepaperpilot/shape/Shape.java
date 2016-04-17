@@ -22,7 +22,6 @@ import thepaperpilot.shape.Util.Constants;
 import thepaperpilot.shape.Util.Mappers;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
 public enum Shape {
     SQUARE("square", "square", "square", 1.2f),
@@ -93,17 +92,13 @@ public enum Shape {
 
         upgradeTable = new Table(Main.skin);
 
-        final DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(2);
-        df.setMinimumFractionDigits(2);
-
         Table attUpgrade = new Table(Main.skin);
         attUpgrade.setBackground(Main.skin.getDrawable("default-round"));
         attUpgrade.add("Excitement").expandY().colspan(2).pad(4).row();
         attLevelLabel = new Label("" + attLevel, Main.skin);
         attUpgrade.add("level ").expandY();
         attUpgrade.add(attLevelLabel).expandY().row();
-        final TextButton attButton = new TextButton("$" + df.format(attLevelCost), Main.skin);
+        final TextButton attButton = new TextButton("$" + attLevelCost.toBigInteger(), Main.skin);
         attButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -113,7 +108,7 @@ public enum Shape {
                 Player.money = Player.money.subtract(attLevelCost);
                 attLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_ATT_COST * attLevel, mod));
                 attLevelLabel.setText("" + attLevel);
-                attButton.setText("$" + df.format(attLevelCost));
+                attButton.setText("$" + attLevelCost.toBigInteger());
                 upgradeEffect(engine, attButton.localToStageCoordinates(new Vector2(attButton.getOriginX(), attButton.getOriginY())).x);
             }
         });
@@ -126,7 +121,7 @@ public enum Shape {
         maxAttLevelLabel = new Label("" + maxAttLevel, Main.skin);
         maxAttUpgrade.add("level ").expandY();
         maxAttUpgrade.add(maxAttLevelLabel).expandY().row();
-        final TextButton maxAttButton = new TextButton("$" + df.format(maxAttLevelCost), Main.skin);
+        final TextButton maxAttButton = new TextButton("$" + maxAttLevelCost.toBigInteger(), Main.skin);
         maxAttButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -137,7 +132,7 @@ public enum Shape {
                 attentionBar.setRange(0, maxAttention);
                 maxAttLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_MAX_ATT_COST * maxAttLevel, mod));
                 maxAttLevelLabel.setText("" + maxAttLevel);
-                maxAttButton.setText("$" + df.format(maxAttLevelCost));
+                maxAttButton.setText("$" + maxAttLevelCost.toBigInteger());
                 upgradeEffect(engine, maxAttButton.localToStageCoordinates(new Vector2(maxAttButton.getOriginX(), maxAttButton.getOriginY())).x);
             }
         });
@@ -150,7 +145,7 @@ public enum Shape {
         effLevelLabel = new Label("" + effLevel, Main.skin);
         efficiencyUpgrade.add("level ").expandY();
         efficiencyUpgrade.add(effLevelLabel).expandY().row();
-        final TextButton effButton = new TextButton("$" + df.format(effLevelCost), Main.skin);
+        final TextButton effButton = new TextButton("$" + effLevelCost.toBigInteger(), Main.skin);
         effButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -160,7 +155,7 @@ public enum Shape {
                 Player.money = Player.money.subtract(effLevelCost);
                 effLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_EFF_COST * effLevel, mod));
                 effLevelLabel.setText("" + effLevel);
-                effButton.setText("$" + df.format(effLevelCost));
+                effButton.setText("$" + effLevelCost.toBigInteger());
                 upgradeEffect(engine, effButton.localToStageCoordinates(new Vector2(effButton.getOriginX(), effButton.getOriginY())).x);
             }
         });
@@ -173,7 +168,7 @@ public enum Shape {
         entLevelLabel = new Label("" + entLevel, Main.skin);
         entertainmentUpgrade.add("level ").expandY();
         entertainmentUpgrade.add(entLevelLabel).expandY().row();
-        final TextButton entButton = new TextButton("$" + df.format(entLevelCost), Main.skin);
+        final TextButton entButton = new TextButton("$" + entLevelCost.toBigInteger(), Main.skin);
         entButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -183,7 +178,7 @@ public enum Shape {
                 Player.money = Player.money.subtract(entLevelCost);
                 entLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_ENT_COST * entLevel, mod));
                 entLevelLabel.setText("" + entLevel);
-                entButton.setText("$" + df.format(entLevelCost));
+                entButton.setText("$" + entLevelCost.toBigInteger());
                 upgradeEffect(engine, entButton.localToStageCoordinates(new Vector2(entButton.getOriginX(), entButton.getOriginY())).x);
             }
         });
@@ -196,7 +191,7 @@ public enum Shape {
         boreLevelLabel = new Label("" + boreLevel, Main.skin);
         boreUpgrade.add("level ").expandY();
         boreUpgrade.add(boreLevelLabel).expandY().row();
-        final TextButton boreButton = new TextButton("$" + df.format(boreLevelCost), Main.skin);
+        final TextButton boreButton = new TextButton("$" + boreLevelCost.toBigInteger(), Main.skin);
         boreButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -206,7 +201,7 @@ public enum Shape {
                 Player.money = Player.money.subtract(boreLevelCost);
                 boreLevelCost = BigDecimal.valueOf(100 * Math.pow(Constants.BASE_BORE_COST * boreLevel, mod));
                 boreLevelLabel.setText("" + boreLevel);
-                boreButton.setText("$" + df.format(boreLevelCost));
+                boreButton.setText("$" + boreLevelCost.toBigInteger());
                 upgradeEffect(engine, boreButton.localToStageCoordinates(new Vector2(boreButton.getOriginX(), boreButton.getOriginY())).x);
             }
         });

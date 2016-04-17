@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
@@ -24,8 +23,6 @@ import thepaperpilot.shape.Player;
 import thepaperpilot.shape.Shape;
 import thepaperpilot.shape.Util.Constants;
 import thepaperpilot.shape.Util.Mappers;
-
-import java.text.DecimalFormat;
 
 public class UISystem extends EntitySystem {
 
@@ -125,10 +122,7 @@ public class UISystem extends EntitySystem {
             shape.attentionBar.setValue(shape.attention);
         }
 
-        DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(2);
-        df.setMinimumFractionDigits(2);
-        money.setText("$" + df.format(Player.money));
+        money.setText("$" + Player.money.toBigInteger());
         rank.setText(Player.rank.string);
         if (Player.rankUp) {
             HUD.toFront();
@@ -147,8 +141,6 @@ public class UISystem extends EntitySystem {
             getEngine().addEntity(entity);
             Player.rankUp = false;
         }
-        df.setMaximumFractionDigits(0);
-        df.setMinimumFractionDigits(0);
-        audience.setText(df.format(Player.audience));
+        audience.setText(Player.audience.toBigInteger().toString());
     }
 }

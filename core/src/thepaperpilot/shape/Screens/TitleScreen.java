@@ -92,6 +92,7 @@ public class TitleScreen implements Screen {
                 switch (keycode) {
                     case Input.Keys.E:
                     case Input.Keys.ENTER:
+                    case Input.Keys.SPACE:
                         selected.run();
                         break;
                     case Input.Keys.UP:

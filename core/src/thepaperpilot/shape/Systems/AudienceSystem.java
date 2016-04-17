@@ -5,8 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
@@ -19,7 +17,6 @@ import thepaperpilot.shape.Util.Constants;
 import thepaperpilot.shape.Util.Mappers;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.ArrayList;
 
 public class AudienceSystem extends EntitySystem {
@@ -51,7 +48,7 @@ public class AudienceSystem extends EntitySystem {
     }
 
     public void update (float deltaTime) {
-        if (Player.audience.round(MathContext.DECIMAL32).compareTo(BigDecimal.valueOf(people)) > 0) {
+        if (Player.audience.compareTo(BigDecimal.valueOf(people)) > 0) {
             Entity entity = new Entity();
             AudienceActorComponent ac = new AudienceActorComponent();
             IdleAnimationComponent ic = new IdleAnimationComponent();
@@ -75,7 +72,7 @@ public class AudienceSystem extends EntitySystem {
                 getEngine().removeEntity(audience.get(0));
                 audience.remove(0);
             }
-        } else if (Player.audience.round(MathContext.DECIMAL32).compareTo(BigDecimal.valueOf(people - 1)) < 0) {
+        } else if (Player.audience.compareTo(BigDecimal.valueOf(people - 1)) < 0) {
             for (final Entity entity : audience) {
                 AudienceActorComponent ac = Mappers.audienceActor.get(entity);
                 AudienceComponent auc = Mappers.audience.get(entity);
