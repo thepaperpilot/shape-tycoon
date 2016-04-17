@@ -20,3 +20,6 @@ different shapes
 
 - audience generates revenue
 - upgrades increase audience
+
+TODO:
+make screen zoom in/out as the audience changes in size
