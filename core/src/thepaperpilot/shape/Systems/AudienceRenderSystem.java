@@ -16,7 +16,8 @@ public class AudienceRenderSystem extends EntitySystem {
 
     public void update (float deltaTime) {
         OrthographicCamera camera = ((OrthographicCamera) stage.getCamera());
-        float targetZoom = 1 + MathUtils.log(2, stage.getActors().size) / 10f;
+        float targetZoom = .5f + (float) Math.floor(MathUtils.log(10, stage.getActors().size)) / 4f;
+        if (targetZoom < .5f) targetZoom = .5f;
         if (Math.abs(camera.zoom - targetZoom) < deltaTime) {
             camera.zoom = targetZoom;
         } else {

@@ -56,10 +56,10 @@ public class AudienceSystem extends EntitySystem {
             ac.actor = new Image();
             float angle = MathUtils.random(0, 180);
             float x = Constants.WORLD_WIDTH / 2f - 32;
-            float y = Constants.UI_HEIGHT + 64;
-            ac.actor.setPosition(x + MathUtils.cosDeg(angle) * (200 + 16 * audience.size()), y + MathUtils.sinDeg(angle) * (200 + 16 * audience.size()));
+            float y = Constants.UI_HEIGHT + 128;
+            ac.actor.setPosition(x + MathUtils.cosDeg(angle) * (100 * audience.size()), y + MathUtils.sinDeg(angle) * (100 * audience.size()));
             ac.actor.setSize(64, 64);
-            ac.actor.addAction(Actions.moveTo(x + MathUtils.cosDeg(angle) * MathUtils.random(100, 100 + 8 * audience.size()), y + MathUtils.sinDeg(angle) * MathUtils.random(100, 100 + 8 * audience.size()), 1, Interpolation.pow2));
+            ac.actor.addAction(Actions.moveTo(x + MathUtils.cosDeg(angle) * MathUtils.random(100, 100 + (int) (100 * MathUtils.log(10, Math.max(1, audience.size())))), y + MathUtils.sinDeg(angle) * MathUtils.random(100, 100 + (int) (100 * MathUtils.log(10, Math.max(1, audience.size())))), 1, Interpolation.pow2));
             ic.file = "line";
             ic.chance = 1;
             entity.add(ac);
